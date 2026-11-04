@@ -4,7 +4,7 @@ This is a self-contained, browser-based wedding RSVP and reception-desk app. It 
 
 ## Try it
 
-Open `index.html` in a modern browser. Use `AMK-1042` for the guest RSVP flow and `wedding2026` for the admin desk.
+Open `index.html` in a modern browser. Use `WP-1042` for the guest RSVP flow and `wedding2026` for the admin desk.
 
 ## Production connection
 
