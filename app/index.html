@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ever After — Guest Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="overrides.css" />
+  </head>
+  <body>
+    <main class="site-shell">
+      <header class="topbar">
+        <a class="brand" href="#"><span>Ever</span> After</a>
+        <nav aria-label="Primary"><button class="nav-link active" data-view="rsvp">RSVP</button><button class="nav-link" data-view="admin">Admin desk</button></nav>
+      </header>
+
+      <section id="rsvpView" class="view">
+        <div class="hero-copy">
+          <p class="eyebrow">SATURDAY · 28 NOVEMBER 2026</p>
+          <h1>Celebrate with<br /><em>Winston &amp; Pokua</em></h1>
+          <p class="intro">We would be delighted to have you with us. Please let us know if you will be joining the ceremony and reception.</p>
+        </div>
+        <section class="rsvp-card" aria-labelledby="rsvpHeading">
+          <div id="lookupStep">
+            <p class="eyebrow">YOUR INVITATION</p>
+            <h2 id="rsvpHeading">Find your invitation</h2>
+            <p>Enter your invitation code to respond.</p>
+            <form id="lookupForm"><label for="code">Invitation code</label><div class="input-row"><input id="code" autocomplete="off" placeholder="e.g. AMK-1042" value="AMK-1042" /><button class="primary" type="submit">Continue <span>→</span></button></div></form>
+            <p class="helper">For this demo, use <button class="text-button" id="demoCode">AMK-1042</button>.</p>
+          </div>
+          <form id="rsvpForm" class="hidden">
+            <p class="eyebrow">WELCOME</p><h2>Mr. &amp; Mrs. Mensah</h2><p class="party-note">Your invitation reserves <strong>2 seats</strong>.</p>
+            <fieldset><legend>Will you attend the ceremony?</legend><label class="choice"><input type="radio" name="ceremony" value="yes" checked /> <span>Joyfully accepts</span></label><label class="choice"><input type="radio" name="ceremony" value="no" /> <span>Regretfully declines</span></label></fieldset>
+            <fieldset><legend>Will you join the reception?</legend><label class="choice"><input type="radio" name="reception" value="yes" checked /> <span>Yes, save us a seat</span></label><label class="choice"><input type="radio" name="reception" value="no" /> <span>No, thank you</span></label></fieldset>
+            <div id="plusOneFields"><label for="plusOne">Name of your guest</label><input id="plusOne" placeholder="Your guest’s full name" /></div>
+            <label for="notes">Dietary requirements or a note <span>(optional)</span></label><textarea id="notes" rows="2" placeholder="Tell us anything helpful…"></textarea><button class="primary wide" type="submit">Confirm response <span>→</span></button>
+          </form>
+          <div id="confirmation" class="hidden confirmation"><div class="check">✓</div><p class="eyebrow">RESPONSE SAVED</p><h2>We can’t wait to celebrate!</h2><p>Your response has been recorded. Your table details will be available at the reception.</p><button class="secondary" id="startOver">Update response</button></div>
+        </section>
+      </section>
+
+      <section id="adminView" class="view hidden">
+        <div class="admin-heading"><div><p class="eyebrow">WINSTON &amp; POKUA · 28 NOV 2026</p><h1>Reception desk</h1></div><div class="admin-actions"><button class="secondary" id="qrLookup">Scan / enter QR</button><button class="primary" id="autoAssign">Auto-assign tables <span>✦</span></button></div></div>
+        <div class="stats" aria-label="Guest statistics"><article><small>INVITED</small><strong id="invitedStat">124</strong></article><article><small>CONFIRMED</small><strong id="confirmedStat">98</strong></article><article><small>CHECKED IN</small><strong id="checkedStat">0</strong></article><article><small>TABLES</small><strong>12</strong></article></div>
+        <div class="admin-grid">
+          <section class="panel guests-panel"><div class="panel-title"><div><h2>Guest check-in</h2><p>Search by guest name or invitation code.</p></div><span class="live-dot">Live</span></div><label class="search"><span>⌕</span><input id="guestSearch" placeholder="Search guests…" /></label><label class="category-filter" for="categoryFilter">Guest category<select id="categoryFilter"><option value="">All categories</option><option>Bride’s Family</option><option>Groom’s Family</option><option>Groom’s Friend</option><option>Bride’s Friend</option><option>Church Leader</option></select></label><div id="guestList" class="guest-list"></div><button id="addGuest" class="secondary panel-action">+ Add guest</button></section>
+          <section class="panel tables-panel"><div class="panel-title"><div><h2>Table assignments</h2><p id="tableSummary">4 tables · 0 of 36 seats assigned</p></div><button class="secondary" id="addTable">+ Table</button></div><div id="tableList" class="table-list"></div></section>
+        </div>
+      </section>
+    </main>
+    <dialog id="loginDialog" class="modal"><form method="dialog" id="loginForm"><p class="eyebrow">RECEPTION TEAM</p><h2>Admin access</h2><p>Enter your desk passcode to manage arrivals and tables.</p><label for="passcode">Passcode</label><input id="passcode" type="password" autocomplete="current-password" placeholder="Enter passcode" /><p class="helper">Demo passcode: <button type="button" class="text-button" id="demoPass">wedding2026</button></p><button class="primary wide" type="submit">Open reception desk</button></form></dialog>
+    <dialog id="qrDialog" class="modal"><form method="dialog" id="qrForm"><p class="eyebrow">QR CHECK-IN</p><h2>Find an invitation</h2><p>Use the camera scanner where supported, or enter the code beneath the QR card.</p><div id="cameraStatus" class="camera-box">Camera scanner ready when supported<br /><button type="button" class="secondary" id="cameraScan">Use camera</button></div><label for="qrCode">Invitation code</label><input id="qrCode" autocomplete="off" placeholder="e.g. AMK-1042" /><button class="primary wide" type="submit">Find guest</button><button class="close-modal" value="cancel">Cancel</button></form></dialog>
+    <dialog id="guestDialog" class="modal"><form method="dialog" id="guestForm"><p class="eyebrow">NEW INVITATION</p><h2>Add a guest</h2><label for="newName">Guest or family name</label><input id="newName" required placeholder="e.g. Adwoa Mensima" /><label for="newCategory">Guest category</label><select id="newCategory" required><option value="Bride’s Family">Bride’s Family</option><option value="Groom’s Family">Groom’s Family</option><option value="Groom’s Friend">Groom’s Friend</option><option value="Bride’s Friend">Bride’s Friend</option><option value="Church Leader">Church Leader</option></select><label for="newSeats">Reserved seats</label><input id="newSeats" type="number" required min="1" max="12" value="1" /><label class="choice"><input type="checkbox" id="newPlus" /> <span>May bring a plus-one</span></label><button class="primary wide" type="submit">Create invitation</button><button class="close-modal" value="cancel">Cancel</button></form></dialog>
+    <dialog id="tableDialog" class="modal"><form method="dialog" id="tableForm"><p class="eyebrow">TABLE EDITOR</p><h2 id="tableDialogTitle">Table 1</h2><label for="tableCapacity">Seat capacity</label><input id="tableCapacity" type="number" min="1" max="30" required /><button class="secondary" id="saveCapacity" type="button">Save capacity</button><label for="assignGuest">Add or move a guest</label><div class="input-row"><select id="assignGuest"></select><button class="primary" id="assignToTable" type="button">Assign</button></div><div id="tableEditorGuests" class="editor-guests"></div><button class="close-modal" value="cancel">Close</button></form></dialog>
+    <div id="toast" role="status"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
