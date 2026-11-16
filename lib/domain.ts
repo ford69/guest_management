@@ -1,4 +1,23 @@
-import type { Guest, ReceptionTable } from "@/lib/types";
+import type {
+  DashboardGuest,
+  Guest,
+  ReceptionTable,
+  RsvpStatus,
+} from "@/lib/types";
+
+export const RSVP_LABELS: Record<RsvpStatus, string> = {
+  pending: "Awaiting reply",
+  attending: "Ceremony & reception",
+  ceremony: "Ceremony only",
+  declined: "Declined",
+};
+
+export function rsvpStatus(guest: DashboardGuest): RsvpStatus {
+  if (guest.ceremony && guest.reception) return "attending";
+  if (guest.ceremony) return "ceremony";
+  if (!guest.rsvpAt) return "pending";
+  return "declined";
+}
 
 export function partySize(guest: Guest): number {
   return guest.seats + (guest.plusOneName ? 1 : 0);

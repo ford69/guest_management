@@ -22,6 +22,13 @@ export type Guest = {
   checked: boolean;
 };
 
+export type DashboardGuest = Guest & {
+  rsvpAt: string | null;
+  checkedInAt: string | null;
+};
+
+export type RsvpStatus = "pending" | "attending" | "ceremony" | "declined";
+
 export type ReceptionTable = {
   id: number;
   name: string;
@@ -40,6 +47,7 @@ export type GuestRow = {
   attending_reception: boolean;
   table_id: number | null;
   checked_in_at: string | null;
+  rsvp_at?: string | null;
 };
 
 export type TableRow = {
