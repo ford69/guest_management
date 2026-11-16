@@ -55,7 +55,7 @@ function confirmationCopy(guest: Guest): { title: string; message: string } {
 export function WeddingApp() {
   const [view, setView] = useState<View>("rsvp");
   const [rsvpStep, setRsvpStep] = useState<RsvpStep>("lookup");
-  const [code, setCode] = useState("WP-1042");
+  const [code, setCode] = useState("");
   const [guest, setGuest] = useState<Guest | null>(null);
   const [ceremony, setCeremony] = useState(true);
   const [reception, setReception] = useState(true);
@@ -344,7 +344,7 @@ export function WeddingApp() {
                     <input
                       id="code"
                       autoComplete="off"
-                      placeholder="e.g. WP-1042"
+                      placeholder="Invitation code"
                       value={code}
                       onChange={(event) => setCode(event.target.value)}
                     />
@@ -353,17 +353,6 @@ export function WeddingApp() {
                     </button>
                   </div>
                 </form>
-                <p className="helper">
-                  For this demo, use{" "}
-                  <button
-                    className="text-button"
-                    type="button"
-                    onClick={() => setCode("WP-1042")}
-                  >
-                    WP-1042
-                  </button>
-                  .
-                </p>
               </div>
             ) : null}
 
@@ -700,9 +689,6 @@ export function WeddingApp() {
             value={adminPassword}
             onChange={(event) => setAdminPassword(event.target.value)}
           />
-          <p className="helper">
-            Create a reception account in the Supabase Auth dashboard.
-          </p>
           <button className="primary wide" type="submit">
             Open reception desk
           </button>
@@ -739,7 +725,7 @@ export function WeddingApp() {
           <input
             id="qrCode"
             autoComplete="off"
-            placeholder="e.g. WP-1042"
+            placeholder="Invitation code"
             value={qrCode}
             onChange={(event) => setQrCode(event.target.value)}
           />

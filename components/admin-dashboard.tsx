@@ -280,7 +280,7 @@ export function AdminDashboard() {
         <section className="rsvp-card cms-login">
           <p className="eyebrow">ADMIN DASHBOARD</p>
           <h2>Sign in</h2>
-          <p>Use a staff account from Supabase Authentication.</p>
+          <p>Sign in to manage guests and tables.</p>
           <form onSubmit={handleLogin}>
             <label htmlFor="cmsEmail">Email address</label>
             <input
@@ -353,8 +353,8 @@ export function AdminDashboard() {
           <strong>{stats.attendingPeople}</strong>
           <span>{stats.receptionPeople} at reception</span>
         </article>
-        <article>
-          <small>AWAITING REPLY</small>
+                    <article>
+          <small>NOT CONFIRMED</small>
           <strong>{stats.pending}</strong>
           <span>{stats.declined} declined</span>
         </article>
@@ -458,12 +458,16 @@ export function AdminDashboard() {
                       <td>{tableName(guest.table)}</td>
                       <td>{guest.checked ? "✓" : "—"}</td>
                       <td className="cms-row-actions">
-                        <button type="button" onClick={() => openGuest(guest)}>
+                        <button
+                          type="button"
+                          className="secondary"
+                          onClick={() => openGuest(guest)}
+                        >
                           Edit
                         </button>
                         <button
                           type="button"
-                          className="danger"
+                          className="cms-delete"
                           onClick={() => void handleDeleteGuest(guest)}
                         >
                           Delete
@@ -518,12 +522,16 @@ export function AdminDashboard() {
                           .join(", ") || "—"}
                       </td>
                       <td className="cms-row-actions">
-                        <button type="button" onClick={() => openTable(table)}>
+                        <button
+                          type="button"
+                          className="secondary"
+                          onClick={() => openTable(table)}
+                        >
                           Edit
                         </button>
                         <button
                           type="button"
-                          className="danger"
+                          className="cms-delete"
                           onClick={() => void handleDeleteTable(table)}
                         >
                           Delete

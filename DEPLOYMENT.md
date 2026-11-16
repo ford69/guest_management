@@ -2,7 +2,7 @@
 
 ## 1. Create the Supabase project
 
-Create a project in the Supabase dashboard. Apply `supabase/migrations/20261105120000_init.sql`, then `supabase/seed.sql`.
+Create a project in the Supabase dashboard. Apply `supabase/migrations/20261105120000_init.sql`. Add guests from the admin dashboard.
 
 Create at least one reception user under **Authentication → Users**. Every authenticated user can manage guests and tables.
 

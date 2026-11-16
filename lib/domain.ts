@@ -6,9 +6,9 @@ import type {
 } from "@/lib/types";
 
 export const RSVP_LABELS: Record<RsvpStatus, string> = {
-  pending: "Awaiting reply",
-  attending: "Ceremony & reception",
-  ceremony: "Ceremony only",
+  pending: "Not Confirmed",
+  attending: "Confirmed for both",
+  ceremony: "Confirmed for Ceremony but not reception",
   declined: "Declined",
 };
 
