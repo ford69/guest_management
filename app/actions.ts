@@ -1,7 +1,7 @@
 "use server";
 
 import { clean, invitationCode, occupiedSeats, partySize } from "@/lib/domain";
-import { mapGuest, mapTable } from "@/lib/mappers";
+import { GUEST_COLUMNS, mapGuest, mapTable } from "@/lib/mappers";
 import { createClient } from "@/lib/supabase/server";
 import type { Guest, GuestRow, ReceptionTable, TableRow } from "@/lib/types";
 
@@ -11,6 +11,14 @@ type ActionResult<T> =
 
 async function publicClient() {
   return createClient();
+}
+
+function normalizeGuest(data: Guest): Guest {
+  return {
+    ...data,
+    plusOneName: data.plusOneName ?? "",
+    rsvpAt: data.rsvpAt ?? null,
+  };
 }
 
 async function adminClient() {
@@ -39,7 +47,7 @@ export async function lookupInvitation(
   });
   if (error) return fail(error.message);
   if (!data) return fail("Invitation not found. Check the code and try again.");
-  return ok(data as Guest);
+  return ok(normalizeGuest(data as Guest));
 }
 
 export async function submitRsvp(input: {
@@ -59,7 +67,7 @@ export async function submitRsvp(input: {
   });
   if (error) return fail(error.message);
   if (!data) return fail("Invitation not found.");
-  return ok(data as Guest);
+  return ok(normalizeGuest(data as Guest));
 }
 
 export async function loginAdmin(
@@ -85,9 +93,7 @@ export async function loadAdminState(): Promise<
     const [guestResult, tableResult] = await Promise.all([
       supabase
         .from("guests")
-        .select(
-          "id, invitation_code, name, category, reserved_seats, plus_one_allowed, plus_one_name, attending_ceremony, attending_reception, table_id, checked_in_at",
-        )
+        .select(GUEST_COLUMNS)
         .order("name"),
       supabase
         .from("reception_tables")
@@ -165,9 +171,7 @@ export async function createGuest(input: {
           reserved_seats: seats,
           plus_one_allowed: Boolean(input.plusOne),
         })
-        .select(
-          "id, invitation_code, name, category, reserved_seats, plus_one_allowed, plus_one_name, attending_ceremony, attending_reception, table_id, checked_in_at",
-        )
+        .select(GUEST_COLUMNS)
         .single();
       if (!error && data) return ok(mapGuest(data as GuestRow));
       if (error && error.code !== "23505") return fail(error.message);
@@ -267,9 +271,7 @@ async function patchGuest(
       .from("guests")
       .update({ ...values, updated_at: new Date().toISOString() })
       .eq("id", id)
-      .select(
-        "id, invitation_code, name, category, reserved_seats, plus_one_allowed, plus_one_name, attending_ceremony, attending_reception, table_id, checked_in_at",
-      )
+      .select(GUEST_COLUMNS)
       .single();
     if (error || !data) return fail(error?.message ?? "Guest not found.");
     return ok(mapGuest(data as GuestRow));

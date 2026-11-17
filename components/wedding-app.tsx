@@ -14,7 +14,8 @@ import {
   updateGuestCategory,
   updateTableCapacity,
 } from "@/app/actions";
-import { initials, occupiedSeats, partySize } from "@/lib/domain";
+import { deleteGuest } from "@/app/admin/actions";
+import { RSVP_LABELS, initials, occupiedSeats, partySize, rsvpStatus } from "@/lib/domain";
 import { CATEGORIES, type Guest, type ReceptionTable } from "@/lib/types";
 
 type View = "rsvp" | "admin";
@@ -219,6 +220,19 @@ export function WeddingApp() {
     }
     replaceGuest(result.data);
     showToast(`${result.data.name} category updated`);
+  };
+
+  const handleDeleteGuest = async (guest: Guest) => {
+    if (!window.confirm(`Delete ${guest.name} (${guest.code})? This cannot be undone.`)) {
+      return;
+    }
+    const result = await deleteGuest(guest.id);
+    if (!result.ok) {
+      showToast(result.error);
+      return;
+    }
+    setGuests((current) => current.filter((item) => item.id !== guest.id));
+    showToast(`${guest.name} deleted`);
   };
 
   const handleQrLookup = async (event: FormEvent) => {
@@ -545,6 +559,9 @@ export function WeddingApp() {
                             ? ` · ${tables.find((table) => table.id === item.table)?.name ?? `Table ${item.table}`}`
                             : " · Unassigned"}
                         </div>
+                        <span className={`cms-badge ${rsvpStatus(item)}`}>
+                          {RSVP_LABELS[rsvpStatus(item)]}
+                        </span>
                         <select
                           className="category-edit"
                           aria-label={`Category for ${item.name}`}
@@ -579,17 +596,26 @@ export function WeddingApp() {
                           </option>
                         ))}
                       </select>
-                      {item.checked ? (
-                        <span className="status checked">✓ Checked in</span>
-                      ) : (
+                      <div className="guest-row-actions">
+                        {item.checked ? (
+                          <span className="status checked">✓ Checked in</span>
+                        ) : (
+                          <button
+                            className="checkin"
+                            type="button"
+                            onClick={() => void handleCheckIn(item.id)}
+                          >
+                            Check in
+                          </button>
+                        )}
                         <button
-                          className="checkin"
+                          className="cms-delete"
                           type="button"
-                          onClick={() => void handleCheckIn(item.id)}
+                          onClick={() => void handleDeleteGuest(item)}
                         >
-                          Check in
+                          Delete
                         </button>
-                      )}
+                      </div>
                     </div>
                   ))
                 ) : (

@@ -22,13 +22,13 @@ export function mapGuest(row: GuestRow): Guest {
     reception: row.attending_reception,
     table: row.table_id,
     checked: Boolean(row.checked_in_at),
+    rsvpAt: row.rsvp_at ?? null,
   };
 }
 
 export function mapDashboardGuest(row: GuestRow): DashboardGuest {
   return {
     ...mapGuest(row),
-    rsvpAt: row.rsvp_at ?? null,
     checkedInAt: row.checked_in_at,
   };
 }

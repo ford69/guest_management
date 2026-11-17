@@ -358,6 +358,14 @@ fieldset legend {
   border-bottom: 1px solid var(--line);
 }
 
+.guest-row-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+  min-width: 96px;
+}
+
 .avatar {
   width: 35px;
   height: 35px;
@@ -710,6 +718,11 @@ select {
   padding: 4px 8px;
   border-radius: 99px;
   white-space: nowrap;
+  margin-top: 6px;
+}
+
+.guest-row .cms-badge {
+  margin-bottom: 6px;
 }
 
 .cms-badge.attending {
@@ -862,7 +875,7 @@ select {
     max-width: none;
   }
 
-  .guest-row .checkin {
+  .guest-row .guest-row-actions {
     grid-column: 3;
     grid-row: 1 / 3;
   }

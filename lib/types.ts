@@ -20,10 +20,10 @@ export type Guest = {
   reception: boolean;
   table: number | null;
   checked: boolean;
+  rsvpAt: string | null;
 };
 
 export type DashboardGuest = Guest & {
-  rsvpAt: string | null;
   checkedInAt: string | null;
 };
 

@@ -1,9 +1,4 @@
-import type {
-  DashboardGuest,
-  Guest,
-  ReceptionTable,
-  RsvpStatus,
-} from "@/lib/types";
+import type { Guest, ReceptionTable, RsvpStatus } from "@/lib/types";
 
 export const RSVP_LABELS: Record<RsvpStatus, string> = {
   pending: "Not Confirmed",
@@ -12,7 +7,9 @@ export const RSVP_LABELS: Record<RsvpStatus, string> = {
   declined: "Declined",
 };
 
-export function rsvpStatus(guest: DashboardGuest): RsvpStatus {
+export function rsvpStatus(
+  guest: Pick<Guest, "ceremony" | "reception" | "rsvpAt">,
+): RsvpStatus {
   if (guest.ceremony && guest.reception) return "attending";
   if (guest.ceremony) return "ceremony";
   if (!guest.rsvpAt) return "pending";
