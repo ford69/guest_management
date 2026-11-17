@@ -551,7 +551,7 @@ export function WeddingApp() {
                   filteredGuests.map((item) => (
                     <div className="guest-row" key={item.id}>
                       <div className="avatar">{initials(item.name)}</div>
-                      <div>
+                      <div className="guest-info">
                         <div className="guest-name">{item.name}</div>
                         <div className="guest-meta">
                           {item.code} · Party of {partySize(item)}
@@ -559,25 +559,25 @@ export function WeddingApp() {
                             ? ` · ${tables.find((table) => table.id === item.table)?.name ?? `Table ${item.table}`}`
                             : " · Unassigned"}
                         </div>
-                        <span className={`cms-badge ${rsvpStatus(item)}`}>
-                          {RSVP_LABELS[rsvpStatus(item)]}
-                        </span>
-                        <select
-                          className="category-edit"
-                          aria-label={`Category for ${item.name}`}
-                          value={item.category}
-                          onChange={(event) =>
-                            void handleCategory(item.id, event.target.value)
-                          }
-                        >
-                          {item.category === "Uncategorised" ? (
-                            <option>Uncategorised</option>
-                          ) : null}
-                          {CATEGORIES.map((category) => (
-                            <option key={category}>{category}</option>
-                          ))}
-                        </select>
                       </div>
+                      <span className={`cms-badge ${rsvpStatus(item)}`}>
+                        {RSVP_LABELS[rsvpStatus(item)]}
+                      </span>
+                      <select
+                        className="category-edit"
+                        aria-label={`Category for ${item.name}`}
+                        value={item.category}
+                        onChange={(event) =>
+                          void handleCategory(item.id, event.target.value)
+                        }
+                      >
+                        {item.category === "Uncategorised" ? (
+                          <option>Uncategorised</option>
+                        ) : null}
+                        {CATEGORIES.map((category) => (
+                          <option key={category}>{category}</option>
+                        ))}
+                      </select>
                       <select
                         className="table-select"
                         aria-label={`Assign ${item.name} to a table`}

@@ -351,11 +351,25 @@ fieldset legend {
 
 .guest-row {
   display: grid;
-  grid-template-columns: auto 1fr auto auto;
-  gap: 12px;
+  grid-template-columns: auto minmax(140px, 1.2fr) minmax(150px, 1fr) auto auto auto;
+  gap: 14px 16px;
   align-items: center;
-  padding: 14px 2px;
+  padding: 16px 2px;
   border-bottom: 1px solid var(--line);
+}
+
+.guest-info {
+  min-width: 0;
+}
+
+.guest-row .category-edit {
+  min-width: 150px;
+  width: 100%;
+}
+
+.guest-row .table-select {
+  min-width: 120px;
+  width: 100%;
 }
 
 .guest-row-actions {
@@ -548,14 +562,20 @@ fieldset legend {
 }
 
 .table-select,
+.category-edit,
 select {
   font: 600 12px var(--font-sans), "DM Sans", sans-serif;
-  color: var(--olive);
+  color: var(--ink);
   border: 1px solid #ccd4c9;
   border-radius: 3px;
   background: white;
-  padding: 7px;
-  max-width: 116px;
+  padding: 8px 10px;
+  max-width: none;
+}
+
+select option {
+  color: var(--ink);
+  background: white;
 }
 
 .category-filter {
@@ -570,6 +590,7 @@ select {
 .category-filter select,
 .modal select {
   max-width: none;
+  width: 100%;
   flex: 1;
 }
 
@@ -670,7 +691,8 @@ select {
 }
 
 .cms-toolbar select {
-  max-width: 180px;
+  min-width: 180px;
+  max-width: 260px;
   width: auto;
 }
 
@@ -718,11 +740,15 @@ select {
   padding: 4px 8px;
   border-radius: 99px;
   white-space: nowrap;
-  margin-top: 6px;
 }
 
 .guest-row .cms-badge {
-  margin-bottom: 6px;
+  margin: 0;
+  justify-self: start;
+  max-width: 180px;
+  white-space: normal;
+  line-height: 1.35;
+  text-align: left;
 }
 
 .cms-badge.attending {
@@ -783,6 +809,7 @@ select {
   max-width: none;
   width: 100%;
   padding: 10px;
+  color: var(--ink);
 }
 
 @keyframes appear {
@@ -867,16 +894,27 @@ select {
 
   .guest-row {
     grid-template-columns: auto 1fr auto;
+    gap: 10px 12px;
+  }
+
+  .guest-row .cms-badge {
+    grid-column: 2;
+    max-width: none;
+  }
+
+  .guest-row .category-edit {
+    grid-column: 2;
+    max-width: none;
   }
 
   .guest-row .table-select {
     grid-column: 2;
-    grid-row: 2;
     max-width: none;
   }
 
   .guest-row .guest-row-actions {
     grid-column: 3;
-    grid-row: 1 / 3;
+    grid-row: 1 / 5;
+    align-self: start;
   }
 }
